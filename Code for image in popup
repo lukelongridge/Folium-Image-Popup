@@ -1,0 +1,21 @@
+import folium
+from folium import IFrame
+import base64
+
+Somemap = folium.Map(location=[0, 10], zoom_start=6, tiles='Stamen Terrain') # just some map
+
+jpg = 'Somepicture.jpg'.format() # find the image - I work in jupyter notebooks, so the image needs to be in the same folder as my notebook
+
+encoded = base64.b64encode(open(jpg, 'rb').read()).decode() # note jpg, png, etc. Also note .decode() for Python 3
+
+html = '<img src="data:image/jpeg;base64,{}" style="width:300px;height:400px;">'.format #note that you use jpeg, not jpg here!
+
+iframe = folium.IFrame(html(encoded), width=350, height=420)
+
+popup = folium.Popup(iframe, max_width=1500)
+
+Image = folium.Marker(location=[-1,10], popup=popup, icon=folium.Icon(icon_color='green'))
+
+Somemap.add_child(Image)
+
+Somemap
